@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/mohana/All_Projects/vagrant/All_Projects/puppet-libraian","disabled":false},"/tmp/manifests":{"owner":"root","guestpath":"/tmp/manifests","hostpath":"/Users/mohana/All_Projects/vagrant/All_Projects/puppet-libraian/puppet/manifests","disabled":false}}}

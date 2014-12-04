@@ -1,49 +1,21 @@
 VAGRANTFILE_API_VERSION = "2"
-DEFAULT_MAC_ADDRESS = "0800279C2E42"
 BOX_NAME ="precise32"
-DEFAULT_HOST_TOMCAT_PORT=18080
-VM_MEMORY =1024
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box =BOX_NAME
   #MAC address
-  config.vm.base_mac = DEFAULT_MAC_ADDRESS
-  set_up_vm_properties(config)
-  do_forward_port(config)
-  install_puppet_librarian(config)
   provision_puppet_librarian(config)
-  do_puppet_provisioning(config)
 end
 
-def set_up_vm_properties(config)
-  config.vm.provider "virtualbox" do |vm|
-    vm.memory =VM_MEMORY
-  end
-end
 
-def install_puppet_librarian(config)
-  config.vm.provision "shell", inline : "gem install librarian-puppet -v 1.0.0"
-  config.vm.provision "shell", inline : "cp /vagrant/modules/Puppetfile /tmp"
-  #config.vm.provision "shell", inline: "cd /tmp && librarian-puppet install --verbose"
-end
 
 def provision_puppet_librarian(config)
   config.vm.provision "puppet" do |puppet|
-    puppet.manifests_path="puppet/puppet-librarian/manifests"
-    puppet.manifest_file="init.pp"
-  end
-end
-
-def do_puppet_provisioning(config)
-  config.vm.provision "puppet" do |puppet|
     puppet.manifests_path="puppet/manifests"
     #puppet.module_path    = "puppet/modules"
-    puppet.manifest_file="site.pp"
+    puppet.manifest_file="main.pp"
     puppet.temp_dir = "/tmp"
-    puppet.options = ['--modulepath=/tmp/modules']
+    # config.vm.gprovision "shell", inline : "cp /vagrant/modules/Puppetfile /tmp"
+    # #config.vm.provision "shell", inline: "cd /tmp && librarian-puppet install --verbose"
   end
-end
-
-def do_forward_port(config)
-  config.vm.network :forwarded_port, host : DEFAULT_HOST_TOMCAT_PORT, guest : 8080
 end

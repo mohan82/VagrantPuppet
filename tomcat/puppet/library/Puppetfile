@@ -1,0 +1,5 @@
+## Puppet Librarian Configuration
+ #Puppet labs forge
+forge "http://forge.puppetlabs.com"
+
+mod 'puppetlabs/tomcat'
