@@ -1,0 +1,4 @@
+VagrantPuppet
+=============
+
+Prototype stuff
