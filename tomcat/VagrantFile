@@ -8,7 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #MAC address
   config.vm.base_mac = DEFAULT_MAC_ADDRESS
   set_up_vm_properties(config)
-  provision_tomcat(config)
+  install_puppet_modules(config)
 end
 
 def set_up_vm_properties(config)
@@ -18,7 +18,7 @@ def set_up_vm_properties(config)
 end
 
 
-def provision_tomcat(config)
+def install_puppet_modules(config)
   # config.vm.provision "puppet" do |puppet|
   #   puppet.manifests_path="puppet/manifests"
   #   #puppet.module_path    = "puppet/modules"
@@ -26,5 +26,12 @@ def provision_tomcat(config)
   #   puppet.temp_dir = "/tmp"
   config.vm.provision "shell", inline:"cp /vagrant/puppet/library/Puppetfile /tmp"
   config.vm.provision "shell", inline:"cd /tmp && librarian-puppet install --verbose"
+end
+
+def execute_puppet(config)
+  config.vm.provision "puppet" do |puppet|
+
+  end
+
 end
 
