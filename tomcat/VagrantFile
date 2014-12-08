@@ -9,6 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.base_mac = DEFAULT_MAC_ADDRESS
   set_up_vm_properties(config)
   install_puppet_modules(config)
+  execute_puppet(config)
 end
 
 def set_up_vm_properties(config)
@@ -19,17 +20,16 @@ end
 
 
 def install_puppet_modules(config)
-  # config.vm.provision "puppet" do |puppet|
-  #   puppet.manifests_path="puppet/manifests"
-  #   #puppet.module_path    = "puppet/modules"
-  #   puppet.manifest_file="main.pp"
-  #   puppet.temp_dir = "/tmp"
   config.vm.provision "shell", inline:"cp /vagrant/puppet/library/Puppetfile /tmp"
   config.vm.provision "shell", inline:"cd /tmp && librarian-puppet install --verbose"
 end
 
 def execute_puppet(config)
   config.vm.provision "puppet" do |puppet|
+    puppet.manifests_path = "puppet/manifests"
+    puppet.manifest_file="main.pp"
+    puppet.temp_dir ="/tmp"
+    puppet.options = "--verbose --debug --modulepath=/tmp/modules"
 
   end
 

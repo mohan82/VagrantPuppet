@@ -1,9 +1,0 @@
-## Puppet Librarian Configuration
- #Puppet labs forge
-forge "http://forge.puppetlabs.com"
-
-mod 'puppetlabs/tomcat'
-
-##Unoffical Puppet Oracle Module
-##Easy to install and set up jdk
-mod "tylerwalts/jdk_oracle"
